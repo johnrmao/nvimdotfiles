@@ -30,7 +30,7 @@ require('lazy').setup {
   require 'plugins.molten',
   require 'plugins.term',
   require 'plugins.copilot',
-  require 'plugins.fugitive',
+  require 'plugins.neogit',
 }
 
 -- zk settings
