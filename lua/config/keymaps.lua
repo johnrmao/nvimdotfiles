@@ -93,3 +93,8 @@ if require("zk.util").notebook_root(vim.fn.expand("%:p")) ~= nil then
   -- Open the code actions for a visual selection.
   map("v", "<leader>za", ":'<,'>lua vim.lsp.buf.range_code_action()<CR>", opts)
 end
+
+-- Scratch
+
+vim.keymap.set("n", "<M-C-n>", "<cmd>Scratch<cr>")
+vim.keymap.set("n", "<M-C-o>", "<cmd>ScratchOpen<cr>")
