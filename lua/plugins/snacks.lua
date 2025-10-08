@@ -29,6 +29,7 @@ return {
             section = "terminal",
             -- cmd = "chafa ~/.config/nvim/lua/plugins/dashboard_img/blinds_crop.jpg --size 52x32 --format symbols --stretch --align center; sleep .1",
             cmd = "ascii-image-converter ~/.config/nvim/lua/plugins/dashboard_img/blinds.jpg -C -c -H 52 -H 32 -b --threshold 110 -f",
+            -- cmd = "ascii-image-converter ~/.config/nvim/lua/plugins/dashboard_img/sumikko.png -C -c -H 52 -H 32 -b --threshold 200 -f",
             height = 32,
             width = 56,
             padding = 1,
