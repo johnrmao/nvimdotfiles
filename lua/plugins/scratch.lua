@@ -8,7 +8,8 @@ return {
       scratch_file_dir = vim.fn.stdpath("cache") .. "/scratch.nvim", -- where your scratch files will be put
       use_telescope = true,
       file_picker = "telescope",
-      filetypes = { "mk", "lua", "js", "ts" },
+      file_types = { "mk", "lua", "js" },
+      default_file_type = "mk",
     })
   end,
   event = "VeryLazy",

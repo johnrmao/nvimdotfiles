@@ -4,7 +4,38 @@
 
 -- ~/.config/nvim/lua/config/keymaps.lua
 
+-- Window pane sizing
+vim.keymap.set("n", "=", [[<cmd>vertical resize +5<cr>]]) -- make the window biger vertically
+vim.keymap.set("n", "-", [[<cmd>vertical resize -5<cr>]]) -- make the window smaller vertically
+vim.keymap.set("n", "+", [[<cmd>horizontal resize +2<cr>]]) -- make the window bigger horizontally by pressing shift and =
+vim.keymap.set("n", "_", [[<cmd>horizontal resize -2<cr>]]) -- make the window smaller horizontally by pressing shift and -
+
 local map = vim.keymap.set
+vim.keymap.set("n", "<leader>cd", function()
+  -- Get the full path of the current file
+  local file_path = vim.fn.expand("%:p")
+
+  -- If there's no file path (e.g., an empty buffer), do nothing
+  if file_path == "" then
+    vim.notify("No file associated with this buffer", vim.log.levels.WARN)
+    return
+  end
+
+  -- Get the home directory path
+  local home_dir = vim.fn.expand("~")
+  local display_path = file_path
+
+  -- If the file path is inside the home directory, replace it with ~
+  if display_path:find(home_dir, 1, true) == 1 then
+    display_path = "~" .. display_path:sub(#home_dir + 1)
+  end
+
+  -- Copy the modified path to the system clipboard register '+'
+  vim.fn.setreg("+", display_path)
+
+  -- Notify the user that the path has been copied
+  vim.notify("Copied to clipboard: " .. display_path)
+end, { noremap = true, silent = true, desc = "Copy file path with ~ for home directory" })
 
 -- Keybindings for molten-nvim
 map("n", "<leader>mi", ":MoltenInit<CR>", { silent = true, desc = "Initialize the plugin" })
@@ -67,3 +98,26 @@ vim.keymap.set("n", "<M-C-o>", "<cmd>ScratchOpen<cr>")
 vim.keymap.set("i", "<Tab>", function()
   return require("luasnip").expand_or_jumpable() and "<Plug>luasnip-expand-or-jump" or "<Tab>"
 end, { expr = true, silent = true })
+
+-- Copilot Chat
+map("n", "<leader>chc", "<cmd>CopilotChatToggle<cr>", { desc = "CopilotChat - Toggle" })
+map("n", "<leader>che", "<cmd>CopilotChatExplain<cr>", { desc = "CopilotChat - Explain code" })
+map("n", "<leader>cht", "<cmd>CopilotChatTests<cr>", { desc = "CopilotChat - Generate tests" })
+map("n", "<leader>chf", "<cmd>CopilotChatFix<cr>", { desc = "CopilotChat - Fix code" })
+map("n", "<leader>cho", "<cmd>CopilotChatOptimize<cr>", { desc = "CopilotChat - Optimize code" })
+map("n", "<leader>chd", "<cmd>CopilotChatDocs<cr>", { desc = "CopilotChat - Generate docs" })
+map("n", "<leader>cha", "<cmd>CopilotChatAsk<cr>", { desc = "CopilotChat - Ask a question" })
+
+-- Visual mode mappings
+map("v", "<leader>che", "<cmd>CopilotChatExplain<cr>", { desc = "CopilotChat - Explain code" })
+map("v", "<leader>cht", "<cmd>CopilotChatTests<cr>", { desc = "CopilotChat - Generate tests" })
+map("v", "<leader>chf", "<cmd>CopilotChatFix<cr>", { desc = "CopilotChat - Fix code" })
+map("v", "<leader>cho", "<cmd>CopilotChatOptimize<cr>", { desc = "CopilotChat - Optimize code" })
+map("v", "<leader>chd", "<cmd>CopilotChatDocs<cr>", { desc = "CopilotChat - Generate docs" })
+map("v", "<leader>cha", "<cmd>CopilotChatAsk<cr>", { desc = "CopilotChat - Ask about code" })
+
+-- Jukit keymaps
+
+vim.keymap.set("n", "<leader>jr", ":JukitRun<CR>", { desc = "Jukit Run Cell" })
+vim.keymap.set("v", "<leader>jr", ":JukitRunVisual<CR>", { desc = "Jukit Run Visual" })
+vim.keymap.set("n", "<leader>jR", ":JukitRestart<CR>", { desc = "Jukit Restart Kernel" })
