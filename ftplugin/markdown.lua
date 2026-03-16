@@ -1,3 +1,7 @@
+-- Set conceal level for markdown files
+vim.opt_local.conceallevel = 2
+vim.opt_local.concealcursor = "nc"
+
 -- Add the key mappings only for Markdown files in a zk notebook.
 if require("zk.util").notebook_root(vim.fn.expand("%:p")) ~= nil then
   local function map(...)

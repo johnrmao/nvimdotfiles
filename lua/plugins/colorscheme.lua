@@ -19,9 +19,23 @@ return {
 
   { "sainnhe/everforest" },
 
-  { "rebelot/kanagawa.nvim", opts = {
-    transparent = false,
-  } },
+  { 
+    "rebelot/kanagawa.nvim", 
+    opts = {
+      transparent = true,
+      theme = "wave",
+      overrides = function(colors)
+        return {
+          NormalFloat = { bg = "none" },
+          FloatBorder = { bg = "none" },
+          FloatTitle = { bg = "none" },
+          SignColumn = { bg = "none" },
+          LineNr = { bg = "none" },
+          CursorLineNr = { bg = "none" },
+        }
+      end,
+    },
+  },
 
   { "junegunn/seoul256.vim" },
 
@@ -39,7 +53,7 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "gruvbox-material",
+      colorscheme = "kanagawa",
     },
   },
 }

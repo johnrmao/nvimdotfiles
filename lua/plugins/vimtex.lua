@@ -6,12 +6,26 @@ return {
     init = function()
       --global vimtex settings
       vim.g.vimtex_imaps_enabled = 0 --i.e., disable them
+      --compiler settings
+      vim.g.vimtex_compiler_method = "latexmk"
+      vim.g.vimtex_compiler_latexmk = {
+        build_dir = "",
+        callback = 1,
+        continuous = 1,
+        executable = "latexmk",
+        options = {
+          "-verbose",
+          "-file-line-error",
+          "-synctex=1",
+          "-interaction=nonstopmode",
+        },
+      }
       --vimtex_view_settings
       --vim.g.vimtex_compiler_latexmk_engines = {
       --  _ = "-lualatex",
       --}
       vim.g.vimtex_view_method = "zathura" -- change this, depending on what you want to use..sumatraPDF, or skim, or zathura, or...
-      vim.g.vimtex_view_general_options = "-reuse-instance -forward-search @tex @line @pdf"
+      vim.g.vimtex_view_general_options = "--synctex-forward @line:@col:@tex @pdf"
       --quickfix settings
       vim.g.vimtex_quickfix_open_on_warning = 0 --  don't open quickfix if there are only warnings
       vim.g.vimtex_quickfix_ignore_filters = {

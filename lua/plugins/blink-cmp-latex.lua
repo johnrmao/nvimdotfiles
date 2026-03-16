@@ -4,20 +4,17 @@ return {
     "erooke/blink-cmp-latex",
   },
 
-  opts = {
-    sources = {
-      default = { "latex" },
-
-      providers = {
-        latex = {
-          name = "Latex",
-          module = "blink-cmp-latex",
-          opts = {
-            -- set to true to insert the latex command instead of the symbol
-            insert_command = false,
-          },
-        },
-      },
-    },
-  },
+  opts = function(_, opts)
+    opts.sources = opts.sources or {}
+    opts.sources.default = { "lsp", "path", "snippets", "buffer" }
+    opts.sources.providers = opts.sources.providers or {}
+    
+    -- Disable tree-sitter highlighting in completion menu (empty array = disabled)
+    opts.completion = opts.completion or {}
+    opts.completion.menu = opts.completion.menu or {}
+    opts.completion.menu.draw = opts.completion.menu.draw or {}
+    opts.completion.menu.draw.treesitter = {}
+    
+    return opts
+  end,
 }

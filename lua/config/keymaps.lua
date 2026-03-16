@@ -90,13 +90,26 @@ vim.api.nvim_set_keymap("n", "<leader>zb", "<Cmd>ZkBacklinks<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader>zm", ":ZkInsertLink<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("v", "<leader>zm", ":ZkInsertLinkAtSelection<CR>", { noremap = true, silent = true })
 
+-- ZK Follow link with Enter
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    vim.keymap.set("n", "<CR>", "<Cmd>lua vim.lsp.buf.definition()<CR>", { buffer = true, desc = "ZK: Follow link" })
+  end,
+})
+
 -- Scratch
 
 vim.keymap.set("n", "<M-C-n>", "<cmd>Scratch<cr>")
 vim.keymap.set("n", "<M-C-o>", "<cmd>ScratchOpen<cr>")
 
-vim.keymap.set("i", "<Tab>", function()
-  return require("luasnip").expand_or_jumpable() and "<Plug>luasnip-expand-or-jump" or "<Tab>"
+-- Use Ctrl-j/k for snippet navigation instead of Tab to avoid conflicts with blink.cmp
+vim.keymap.set("i", "<C-j>", function()
+  return require("luasnip").expand_or_jumpable() and "<Plug>luasnip-expand-or-jump" or "<C-j>"
+end, { expr = true, silent = true })
+
+vim.keymap.set("i", "<C-k>", function()
+  return require("luasnip").jumpable(-1) and "<Plug>luasnip-jump-prev" or "<C-k>"
 end, { expr = true, silent = true })
 
 -- Copilot Chat
@@ -121,3 +134,6 @@ map("v", "<leader>cha", "<cmd>CopilotChatAsk<cr>", { desc = "CopilotChat - Ask a
 vim.keymap.set("n", "<leader>jr", ":JukitRun<CR>", { desc = "Jukit Run Cell" })
 vim.keymap.set("v", "<leader>jr", ":JukitRunVisual<CR>", { desc = "Jukit Run Visual" })
 vim.keymap.set("n", "<leader>jR", ":JukitRestart<CR>", { desc = "Jukit Restart Kernel" })
+
+-- VimTeX keymaps
+vim.keymap.set("n", "\\lv", ":VimtexView<CR>", { desc = "VimTeX View (SyncTex forward search)" })
